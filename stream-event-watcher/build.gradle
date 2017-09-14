@@ -1,0 +1,38 @@
+apply plugin: 'scala'
+apply plugin: 'java'
+apply plugin: 'idea'
+
+group "com.mobcrush.ums"
+version "1.0.0-SNAPSHOT"
+
+sourceCompatibility = 1.8
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.mobcrush.ums.streamwatcher.StreamEventWatcherServerMain',
+                'Implementation-Title': 'Stream Event Watcher Server'
+    }
+    from {
+        configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+configurations {
+    // configuration that holds jars to include in the jar
+    extraLibs
+}
+
+repositories() {
+    mavenCentral()
+}
+
+dependencies {
+    extraLibs 'org.scala-lang:scala-library:2.11.7'
+    extraLibs (group: "com.rabbitmq", name: "amqp-client", version: "4.2.0") {
+        exclude group: "org.slf4j", module: "slf4j-api"
+    }
+    extraLibs group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    extraLibs group: "org.slf4j", name: "slf4j-api", version: "1.7.25"
+
+    configurations.compile.extendsFrom(configurations.extraLibs)
+}
