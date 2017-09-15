@@ -7,6 +7,11 @@ import com.rabbitmq.client.Channel
   */
 trait ConsumerService {
 
+  /**
+    * Start process messages in queue
+    *
+    * @param channel  channel
+    */
   def process(channel: Channel)
 
 }
