@@ -1,5 +1,6 @@
 package com.mobcrush.ums.streamwatcher
 
+import com.mobcrush.ums.streamwatcher.service.{ConsumerService, ConsumerServiceImpl}
 import com.rabbitmq.client.{Channel, Connection, ConnectionFactory}
 import org.slf4j.LoggerFactory
 
@@ -9,14 +10,13 @@ import org.slf4j.LoggerFactory
 object StreamEventWatcherServerMain {
 
   private val logger = LoggerFactory.getLogger(this.getClass.getName)
-  private val QUEUE_NAME = "stream-events"
 
   def main(args: Array[String]) = {
     val connection = connect()
-    val channel = connection.createChannel(1)
-    logger.info("Start publishing")
-    channel.basicPublish("", QUEUE_NAME, true, null, "Hello world".getBytes())
-    logger.info("Finish publishing")
+    val channel = connection.createChannel()
+
+    val consumerService: ConsumerService = new ConsumerServiceImpl
+    consumerService.process(channel)
 
     disconnect(connection, channel)
   }
