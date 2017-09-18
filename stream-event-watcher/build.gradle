@@ -1,3 +1,14 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
+    }
+}
+
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'application'
 apply plugin: 'scala'
 apply plugin: 'java'
 apply plugin: 'idea'
@@ -7,39 +18,35 @@ version "1.0.0-SNAPSHOT"
 
 sourceCompatibility = 1.8
 
+mainClassName = "com.mobcrush.ums.streamwatcher.StreamEventWatcherServerMain"
+
 jar {
     manifest {
         attributes 'Main-Class': 'com.mobcrush.ums.streamwatcher.StreamEventWatcherServerMain',
                 'Implementation-Title': 'Stream Event Watcher Server'
     }
-    from {
-        configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
-    }
 }
 
-configurations {
-    // configuration that holds jars to include in the jar
-    extraLibs
+shadowJar {
+    baseName = 'stream-event-watcher'
+    classifier = null
+    version = version
 }
 
 repositories() {
     mavenCentral()
 }
 
+
 dependencies {
-    extraLibs 'org.scala-lang:scala-library:2.11.7'
-    extraLibs (group: "com.rabbitmq", name: "amqp-client", version: "4.2.0") {
+    compile 'org.scala-lang:scala-library:2.11.7'
+    compile (group: "com.rabbitmq", name: "amqp-client", version: "4.2.0") {
         exclude group: "org.slf4j", module: "slf4j-api"
     }
-    extraLibs group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.1'
-    extraLibs group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.1'
-    extraLibs group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.1'
-    extraLibs group: 'com.fasterxml.jackson.module', name: 'jackson-module-scala_2.12', version: '2.9.0'
-    extraLibs group: 'com.fasterxml.jackson.module', name: 'jackson-module-paranamer', version: '2.9.0' // Add as dependency
-    extraLibs 'org.scala-lang:scala-reflect:2.12.3' // Add as dependency
-    extraLibs 'com.thoughtworks.paranamer:paranamer:2.8' // Add as dependency
-    extraLibs group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
-    extraLibs group: "org.slf4j", name: "slf4j-api", version: "1.7.25"
-
-    configurations.compile.extendsFrom(configurations.extraLibs)
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.1'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.1'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.1'
+    compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-scala_2.12', version: '2.9.0'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    compile group: "org.slf4j", name: "slf4j-api", version: "1.7.25"
 }
