@@ -1,4 +1,4 @@
-package com.mobcrush.ums.streamwatcher.model
+package com.mobcrush.ums.streamwatcher.model.event
 
 import com.fasterxml.jackson.annotation.{JsonIgnoreProperties, JsonProperty}
 
@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.{JsonIgnoreProperties, JsonProperty}
   */
 @JsonIgnoreProperties(ignoreUnknown = true)
 case class SocialProviderEventModel(@JsonProperty("id") id: String,
-                                    @JsonProperty("type") providerType: String) {
+                                    @JsonProperty("name") name: String,
+                                    @JsonProperty("token") token: String) {
 
 }

@@ -5,7 +5,8 @@ package com.mobcrush.ums.streamwatcher.model.enums
   */
 object StreamEventType extends Enumeration {
 
-  type StreamEvent = Value
-  val ADD, REMOVE = Value
+//  type StreamEvent = Value
+  val START = Value("StreamStarted")
+  val FINISH = Value("StreamFinished")
 
 }
