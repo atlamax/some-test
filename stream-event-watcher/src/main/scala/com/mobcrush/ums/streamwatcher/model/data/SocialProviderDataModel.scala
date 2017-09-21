@@ -1,4 +1,3 @@
-package com.mobcrush.ums.streamwatcher.model.testtest
 package com.mobcrush.ums.streamwatcher.model.data
 
 import com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING

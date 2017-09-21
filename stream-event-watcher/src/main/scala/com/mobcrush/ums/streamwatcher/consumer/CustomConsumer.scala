@@ -4,7 +4,7 @@ import java.nio.charset.StandardCharsets.UTF_8
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
-import com.mobcrush.ums.streamwatcher.model.testtest.StreamDataModel
+import com.mobcrush.ums.streamwatcher.model.data.StreamDataModel
 import com.mobcrush.ums.streamwatcher.model.enums.StreamEventType
 import com.mobcrush.ums.streamwatcher.model.event.StreamEventModel
 import com.rabbitmq.client._
