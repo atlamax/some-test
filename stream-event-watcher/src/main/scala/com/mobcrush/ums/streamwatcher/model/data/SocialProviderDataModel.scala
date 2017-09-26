@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.{JsonFormat, JsonInclude, JsonProperty}
 /**
   * Model that represents data structure for social provider event information
   */
-@JsonInclude(Include.NON_NULL)
+@JsonInclude(Include.NON_ABSENT)
 case class SocialProviderDataModel(@JsonProperty("id") id: String,
                                    @JsonProperty("type") providerType: String,
                                    @JsonProperty("access_token") accessToken: String,
