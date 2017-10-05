@@ -30,9 +30,9 @@ object SubscriberService {
   def process(): Unit = {
 
     Subscription.run(rabbitControl) {
-      channel(qos = 3) {
+      channel(qos = RABBITMQ_CONSUMER_STREAMS_COUNT) {
         consume(Queue.passive(RABBITMQ_QUEUE_NAME)) {
-          (body(UTF8StringMarshaller) & routingKey) { (rawContent, key) =>
+          body(UTF8StringMarshaller) { (rawContent) =>
 
             LOGGER.info("Content: '{}'", rawContent)
             val eventModel: StreamEventModel = MAPPER.readValue(rawContent, classOf[StreamEventModel])
@@ -42,7 +42,6 @@ object SubscriberService {
           }
         }
       }
-
     }
   }
 
@@ -51,10 +50,10 @@ object SubscriberService {
 
     action match {
       case StreamEventType.START => {
-        new StreamEventStartStrategy().process(eventModel)
+        StreamEventStartStrategy.process(eventModel)
       }
       case StreamEventType.FINISH => {
-        new StreamEventFinishStrategy().process(eventModel)
+        StreamEventFinishStrategy.process(eventModel)
       }
       case _ => {
         LOGGER.error("Unknown event type in stream event '{}'", rawContent)

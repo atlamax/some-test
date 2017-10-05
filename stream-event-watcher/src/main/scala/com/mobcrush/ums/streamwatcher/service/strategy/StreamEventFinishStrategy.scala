@@ -4,7 +4,7 @@ import com.mobcrush.ums.streamwatcher.model.event.StreamEventModel
 /**
   * Strategy to finish streaming
   */
-class StreamEventFinishStrategy extends AbstractStreamEventProcessStrategy {
+object StreamEventFinishStrategy extends AbstractStreamEventProcessStrategy {
 
   override def process(eventModel: StreamEventModel): Unit = {
     LOGGER.info("Going to REMOVE event in ElastiCache. Id: '{}'", eventModel.payload.id)

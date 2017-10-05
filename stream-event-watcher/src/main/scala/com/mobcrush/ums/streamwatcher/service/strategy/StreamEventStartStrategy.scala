@@ -12,7 +12,7 @@ import scala.collection.JavaConverters._
 /**
   * Strategy to start streaming
   */
-class StreamEventStartStrategy extends AbstractStreamEventProcessStrategy {
+object StreamEventStartStrategy extends AbstractStreamEventProcessStrategy {
 
   override def process(eventModel: StreamEventModel): Unit = {
     LOGGER.info("Going to ADD event in ElastiCache. Id: {}", eventModel.payload.id)
