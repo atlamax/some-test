@@ -41,6 +41,12 @@ object ConfigurationProvider {
     sys.props("user.home") + sys.props("file.separator") + CONFIG_FILE_DEFAULT_NAME
   }
 
+  /**
+    * Gets number of parallel streams for RabbitMQ consumer
+    * Value can be configured via properties, or get as number of CPU cores
+    *
+    * @return number of parallel streams for RabbitMQ consumer
+    */
   private def getRabbitMQConsumerStreamsCount: Int = {
     if (config.hasPath("rabbitmq.consumer.streams-count")) {
       config.getInt("rabbitmq.consumer.streams-count")
